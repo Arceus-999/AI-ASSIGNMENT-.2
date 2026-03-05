@@ -1,117 +1,37 @@
-# Comparison of Search Algorithms using the N-Queens Problem
+# Comparison of Search Algorithms (Using N-Queens Problem)
 
-The **N-Queens problem** is a classical search problem in Artificial Intelligence where the objective is to place N queens on an N × N chessboard such that no two queens attack each other. Various search strategies can be applied to explore the state space and find a valid solution. The following is a comparison of several uninformed search algorithms used to solve the problem.
+In the N-Queens problem, different search algorithms can be used to explore possible board configurations and find a valid arrangement of queens. Each algorithm searches the state space in a different way, so their performance also differs.
 
-## 1. Breadth First Search (BFS)
-Breadth First Search explores the search tree level by level. It expands all nodes at the current depth before moving to the next level.
+## Breadth First Search (BFS)
+Breadth First Search explores the search tree level by level. It first checks all possible states at depth 1, then depth 2, and so on.
 
-**Characteristics**
-- Uses a queue (FIFO data structure).
-- Guarantees finding the shallowest solution.
-- Requires large memory because it stores all nodes at each level.
+BFS can always find a solution if one exists, but it uses a lot of memory because it stores many states at the same time. For problems like N-Queens where the number of states is large, BFS can become slow and memory intensive.
 
-**Advantages**
-- Complete if the branching factor is finite.
-- Finds the optimal solution when all step costs are equal.
+## Depth First Search (DFS)
+Depth First Search explores one branch completely before moving to another branch. It goes deep into the search tree and backtracks when it reaches a dead end.
 
-**Disadvantages**
-- Memory consumption grows rapidly for large problems like N-Queens.
+DFS uses less memory compared to BFS, but it does not guarantee the shortest or best solution. Sometimes it may spend a lot of time exploring a wrong path.
 
----
+## Uniform Cost Search (UCS)
+Uniform Cost Search expands the node that has the lowest path cost. It uses a priority queue to decide which node to explore next.
 
-## 2. Depth First Search (DFS)
-Depth First Search explores a branch of the search tree as deeply as possible before backtracking.
+If the costs of all steps are the same, UCS behaves similarly to BFS. It guarantees the optimal solution, but it can be slower because it keeps checking the cost of each path.
 
-**Characteristics**
-- Uses a stack (LIFO data structure).
-- Goes deep into one branch before exploring others.
+## Depth Limited Search (DLS)
+Depth Limited Search is similar to DFS, but it limits how deep the search can go. This helps avoid going too deep in the search tree.
 
-**Advantages**
-- Requires less memory than BFS.
-- Simple to implement.
+However, if the depth limit is too small, the algorithm may not find the solution even if one exists.
 
-**Disadvantages**
-- May get stuck in deep branches.
-- Does not guarantee the optimal solution.
+## Bidirectional Search
+Bidirectional Search works by searching from both the start state and the goal state at the same time. The search stops when the two searches meet.
 
----
+This method can reduce the search time because the search space becomes smaller. However, it is harder to implement and requires knowledge of the goal state.
 
-## 3. Uniform Cost Search (UCS)
-Uniform Cost Search expands the node with the lowest path cost first.
+## Iterative Deepening DFS (IDDFS)
+Iterative Deepening DFS is a combination of BFS and DFS. It runs DFS multiple times with increasing depth limits.
 
-**Characteristics**
-- Uses a priority queue.
-- Considers path cost when selecting the next node.
+This approach uses less memory like DFS but still ensures that the shallowest solution is found like BFS. The only drawback is that some nodes may be explored more than once.
 
-**Advantages**
-- Guarantees the optimal solution when costs are positive.
-- Works well when step costs differ.
+## Overall Comparison
+BFS and UCS are reliable because they can always find a solution when one exists, but they require more memory. DFS and DLS are more memory efficient but may miss the best or shallowest solution. Bidirectional search can reduce the search effort if the goal state is known. IDDFS tries to balance the advantages of BFS and DFS by using less memory while still being able to find shallow solutions.
 
-**Disadvantages**
-- Slower than BFS when all step costs are equal.
-- Requires more memory due to storing many nodes.
-
----
-
-## 4. Depth Limited Search (DLS)
-Depth Limited Search is a modified version of DFS where the search depth is limited to a fixed value.
-
-**Characteristics**
-- Uses DFS strategy with a depth limit.
-- Prevents infinite search in very deep trees.
-
-**Advantages**
-- Controls excessive depth exploration.
-- Uses less memory.
-
-**Disadvantages**
-- May fail to find the solution if the depth limit is too small.
-
----
-
-## 5. Bidirectional Search
-Bidirectional Search runs two searches simultaneously: one from the start state and the other from the goal state.
-
-**Characteristics**
-- Searches forward and backward until both meet.
-- Reduces the effective search depth.
-
-**Advantages**
-- Much faster than BFS in many cases.
-- Reduces search space significantly.
-
-**Disadvantages**
-- Requires knowledge of the goal state.
-- More complex to implement.
-
----
-
-## 6. Iterative Deepening Depth First Search (IDDFS)
-IDDFS combines the advantages of BFS and DFS by repeatedly performing DFS with increasing depth limits.
-
-**Characteristics**
-- Performs depth-limited searches with gradually increasing limits.
-- Uses DFS internally.
-
-**Advantages**
-- Requires less memory like DFS.
-- Finds optimal solutions like BFS when step costs are equal.
-
-**Disadvantages**
-- Some nodes are expanded multiple times.
-
----
-
-# Overall Comparison
-
-| Algorithm | Data Structure Used | Completeness | Optimality | Memory Usage | Main Advantage | Main Disadvantage |
-|-----------|--------------------|--------------|------------|--------------|---------------|------------------|
-| BFS | Queue | Complete | Optimal (equal costs) | Very High | Finds shallowest solution | High memory usage |
-| DFS | Stack | Not always complete | Not optimal | Low | Memory efficient | May get stuck in deep paths |
-| UCS | Priority Queue | Complete | Optimal | High | Considers path cost | Slower if costs equal |
-| DLS | Stack | Not always complete | Not optimal | Low | Prevents infinite depth | May miss solution |
-| Bidirectional | Queue/Two searches | Complete | Optimal (equal costs) | Moderate | Reduces search time | Harder to implement |
-| IDDFS | Stack | Complete | Optimal (equal costs) | Low | Combines BFS and DFS benefits | Repeats node expansions |
-
-## Conclusion
-Each search algorithm has its own strengths and weaknesses. BFS and UCS guarantee optimal solutions but require high memory. DFS and DLS use less memory but may fail to find optimal solutions. Bidirectional search reduces the search space significantly, while IDDFS provides a balance between memory efficiency and completeness. The choice of algorithm depends on the problem size, memory constraints, and the need for optimal solutions.
